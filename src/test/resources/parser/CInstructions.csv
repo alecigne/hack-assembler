@@ -1,0 +1,9 @@
+D=M,D,M,
+D=D-M,D,D-M,
+D;JGT,,D,JGT
+D=M,D,M,
+0;JMP,,0,JMP
+D=M,D,M,
+M=D,M,D,
+0;JMP,,0,JMP
+D=M+1;JGT,D,M+1,JGT
