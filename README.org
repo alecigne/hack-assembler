@@ -1,0 +1,6 @@
+#+TITLE: Hack Assembler
+
+A Java assembler for the nand2tetris' Hack assembly language. See my
+[[https://github.com/alecigne/nand2tetris][nand2tetris]] repository for more details.
+
+This is a work in progress! :)
