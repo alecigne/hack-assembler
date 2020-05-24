@@ -1,0 +1,4 @@
+@16 // comment,@16
+D=M+1;JGT // comment,D=M+1;JGT
+"  @12 // comment",@12
+" D=M    // comment",D=M
