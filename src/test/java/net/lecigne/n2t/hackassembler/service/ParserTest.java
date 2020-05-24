@@ -6,13 +6,10 @@ import net.lecigne.n2t.hackassembler.model.Instruction;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
-import java.util.Optional;
-
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ParserTest {
 
@@ -22,11 +19,9 @@ class ParserTest {
     @CsvFileSource(resources = "/parser/AInstructions.csv")
     void parse_givenAInstructionLine_shouldParseIt(String aInstLine, String address) {
         // When
-        Optional<Instruction> parsedLine = parser.parse(aInstLine);
+        Instruction instruction = parser.apply(aInstLine);
 
         // Then
-        assertTrue(parsedLine.isPresent());
-        Instruction instruction = parsedLine.get();
         assertThat(instruction, instanceOf(AInstruction.class));
         AInstruction aInstruction = (AInstruction) instruction;
         assertThat(aInstruction.getAddress(), is(equalTo(address)));
@@ -36,26 +31,14 @@ class ParserTest {
     @CsvFileSource(resources = "/parser/CInstructions.csv")
     void parse_givenCInstructionLine_shouldParseIt(String cInstLine, String dest, String comp, String jump) {
         // When
-        Optional<Instruction> parsedLine = parser.parse(cInstLine);
+        Instruction instruction = parser.apply(cInstLine);
 
         // Then
-        assertTrue(parsedLine.isPresent());
-        Instruction instruction = parsedLine.get();
         assertThat(instruction, instanceOf(CInstruction.class));
         CInstruction cInstruction = (CInstruction) instruction;
         assertThat(cInstruction.getDest(), is(equalTo(dest)));
         assertThat(cInstruction.getComp(), is(equalTo(comp)));
-        assertThat(cInstruction.getJmp(), is(equalTo(jump)));
-    }
-
-    @ParameterizedTest
-    @CsvFileSource(resources = "/parser/Comments.csv")
-    void parse_givenCommentOrWhitespace_shouldReturnEmptyOptional(String comment) {
-        // When
-        Optional<Instruction> parsedLine = parser.parse(comment);
-
-        // Then
-        assertTrue(parsedLine.isEmpty());
+        assertThat(cInstruction.getJump(), is(equalTo(jump)));
     }
 
 }

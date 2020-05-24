@@ -1,9 +1,14 @@
 package net.lecigne.n2t.hackassembler.model;
 
-import net.lecigne.n2t.hackassembler.service.BinaryConverter;
+import lombok.Getter;
 
-public interface Instruction {
+@Getter
+public abstract class Instruction {
 
-    String accept(BinaryConverter converter);
+    private InstructionType instructionType;
+
+    public Instruction(InstructionType instructionType) {
+        this.instructionType = instructionType;
+    }
 
 }

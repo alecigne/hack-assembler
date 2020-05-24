@@ -10,9 +10,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-class BinaryConverterTest {
+class ConverterTest {
 
-    BinaryConverter converter = new BinaryConverter();
+    Converter converter = new Converter();
 
     @ParameterizedTest
     @CsvFileSource(resources = "/converter/Addresses.csv")
@@ -22,8 +22,8 @@ class BinaryConverterTest {
         Instruction instruction = new AInstruction(address);
 
         // When
-        String binaryLine1 = converter.convert(aInstruction);
-        String binaryLine2 = converter.convert(instruction);
+        String binaryLine1 = converter.apply(aInstruction);
+        String binaryLine2 = converter.apply(instruction);
 
         // Then
         assertThat(binaryLine1, is(equalTo(binary)));
@@ -38,8 +38,8 @@ class BinaryConverterTest {
         Instruction instruction = new CInstruction(dest, comp, jump);
 
         // When
-        String binaryLine1 = converter.convert(cInstruction);
-        String binaryLine2 = converter.convert(instruction);
+        String binaryLine1 = converter.apply(cInstruction);
+        String binaryLine2 = converter.apply(instruction);
 
         // Then
         assertThat(binaryLine1, is(equalTo(binary)));

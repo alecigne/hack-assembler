@@ -5,8 +5,9 @@ import net.lecigne.n2t.hackassembler.model.CInstruction;
 import net.lecigne.n2t.hackassembler.model.Instruction;
 
 import java.util.HashMap;
+import java.util.function.Function;
 
-public class BinaryConverter {
+public class Converter implements Function<Instruction, String> {
 
     private static final HashMap<String, String> DEST_MAP = new HashMap<>();
 
@@ -16,7 +17,36 @@ public class BinaryConverter {
 
     private static final String CINST_PREFIX = "111";
 
-    public BinaryConverter() {
+    public Converter() {
+        initMaps();
+    }
+
+    @Override
+    public String apply(Instruction instruction) {
+        switch (instruction.getInstructionType()) {
+            case A:
+                return convertAInstruction((AInstruction) instruction);
+            case C:
+                return convertCInstruction((CInstruction) instruction);
+            default:
+                return null;
+        }
+    }
+
+    private String convertAInstruction(AInstruction aInstruction) {
+        String binaryAddress = Integer.toBinaryString(Integer.parseInt(aInstruction.getAddress()));
+        return String.format("%16s", binaryAddress).replace(' ', '0');
+    }
+
+    private String convertCInstruction(CInstruction cInstruction) {
+        return String.join("",
+                CINST_PREFIX,
+                COMP_MAP.get(cInstruction.getComp()),
+                DEST_MAP.get(cInstruction.getDest()),
+                JUMP_MAP.get(cInstruction.getJump()));
+    }
+
+    private void initMaps() {
         DEST_MAP.put(null, "000");
         DEST_MAP.put("M", "001");
         DEST_MAP.put("D", "010");
@@ -63,27 +93,6 @@ public class BinaryConverter {
         JUMP_MAP.put("JNE", "101");
         JUMP_MAP.put("JLE", "110");
         JUMP_MAP.put("JMP", "111");
-    }
-
-    public String convert(Instruction instruction) {
-        return instruction.accept(this);
-    }
-
-    public String convert(AInstruction aInstruction) {
-        return decimalStringTo16BitBinaryString(aInstruction.getAddress());
-    }
-
-    private String decimalStringTo16BitBinaryString(String decimal) {
-        String binaryString = Integer.toBinaryString(Integer.parseInt(decimal));
-        return String.format("%16s", binaryString).replace(' ', '0');
-    }
-
-    public String convert(CInstruction cInstruction) {
-        return String.join("",
-                CINST_PREFIX,
-                COMP_MAP.get(cInstruction.getComp()),
-                DEST_MAP.get(cInstruction.getDest()),
-                JUMP_MAP.get(cInstruction.getJmp()));
     }
 
 }
