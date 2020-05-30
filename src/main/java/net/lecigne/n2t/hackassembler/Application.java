@@ -7,14 +7,18 @@ import net.lecigne.n2t.hackassembler.service.Assembler;
 
 public class Application {
 
+    @SuppressWarnings("squid:S106") // System.out.println is OK for this CLI app
     public static void main(String... args) {
-        String sourcePath = "/home/alc/tmp/n2t-test/PongL.asm";
-        String outputPath = "/home/alc/tmp/n2t-test/output.hack";
+        if (args.length == 0) {
+            System.out.println("Please provide a filename.");
+            return;
+        }
+        String sourcePath = args[0];
         Parser parser = new Parser();
         Converter converter = new Converter();
         Cleaner cleaner = new Cleaner();
         Assembler assembler = new Assembler(cleaner, parser, converter);
-        assembler.assembleFile(sourcePath, outputPath);
+        assembler.assembleFile(sourcePath);
     }
 
 }
