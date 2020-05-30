@@ -1,19 +1,18 @@
 package net.lecigne.n2t.hackassembler.service;
 
-public class Cleaner {
+import java.util.function.UnaryOperator;
+
+public class Cleaner implements UnaryOperator<String> {
 
     private static final String COMMENT = "//";
 
-    public String cleanLine(final String line) {
+    @Override
+    public String apply(final String line) {
         String cleanLine = line;
         if (cleanLine.contains(COMMENT)) {
             cleanLine = cleanLine.substring(0, line.indexOf(COMMENT));
         }
         return cleanLine.trim();
-    }
-
-    public boolean isComment(final String line) {
-        return line.trim().startsWith(COMMENT);
     }
 
 }

@@ -2,3 +2,6 @@
 D=M+1;JGT // comment,D=M+1;JGT
 "  @12 // comment",@12
 " D=M    // comment",D=M
+// comment,""
+"   // comment",""
+// comment @12,""

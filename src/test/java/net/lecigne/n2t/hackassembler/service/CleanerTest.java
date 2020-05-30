@@ -14,17 +14,12 @@ class CleanerTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/cleaner/DirtyLines.csv")
-    void cleanLine(String lineWithComment, String cleanLine) {
+    void cleanLine(String dirtyLine, String cleanLine) {
         // When
-        String actualLine = cleaner.cleanLine(lineWithComment);
+        String actualLine = cleaner.apply(dirtyLine);
 
         // Then
         assertThat(actualLine, is(equalTo(cleanLine)));
     }
 
-    @ParameterizedTest
-    @CsvFileSource(resources = "/cleaner/Comments.csv")
-    void isComment(String comment) {
-        assertTrue(cleaner.isComment(comment));
-    }
 }

@@ -8,7 +8,7 @@ import net.lecigne.n2t.hackassembler.service.Assembler;
 public class Application {
 
     public static void main(String... args) {
-        String sourcePath = "/home/alc/tmp/n2t-test/source.asm";
+        String sourcePath = "/home/alc/tmp/n2t-test/PongL.asm";
         String outputPath = "/home/alc/tmp/n2t-test/output.hack";
         Parser parser = new Parser();
         Converter converter = new Converter();

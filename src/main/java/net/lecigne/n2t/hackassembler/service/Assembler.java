@@ -1,6 +1,7 @@
 package net.lecigne.n2t.hackassembler.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,8 +28,8 @@ public class Assembler {
     public void assembleFile(String sourcePath, String outputPath) {
         try (Stream<String> s = Files.lines(Paths.get(sourcePath))) {
             List<String> binaryInstructions = s
-                    .filter(l -> !cleaner.isComment(l))
-                    .map(cleaner::cleanLine)
+                    .map(cleaner)
+                    .filter(StringUtils::isNotBlank)
                     .map(parser)
                     .map(converter)
                     .collect(Collectors.toList());
